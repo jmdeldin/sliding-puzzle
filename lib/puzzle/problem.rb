@@ -63,7 +63,46 @@ class Puzzle::Problem
     s
   end
 
-  # TODO: Solvable by counting inversions -- fail in initializer
+  # Returns whether the problem is solvable or not.
+  #
+  # If the parity of permutations and parity of manhattan distance are the
+  # same, then this puzzle is unsolvable.
+  def solvable?
+  end
+
+  def manhattan_distance
+    xg, yg = [@cols-1, @rows-1]
+    xb, yb = @blank_position
+
+    (xg - xb).abs + (yg - yb).abs
+  end
+
+  # This is essentially bubble-sort.
+  def count_inversions
+    invs = 0
+    row = @board.flatten.reject { |x| x.zero? }
+
+    sorted = false
+    i = 0
+    sz = row.size
+
+    until sorted
+      sorted = true
+      while i < sz && i+1 < sz
+        if row[i] > row[i+1]
+          tmp = row[i]
+          row[i] = row[i+1]
+          row[i+1] = tmp
+          invs += 1
+          sorted = false
+        end
+        i += 1
+      end
+    end
+
+    invs
+  end
+
   private
 
   def find_blank_position

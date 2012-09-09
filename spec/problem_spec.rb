@@ -116,4 +116,52 @@ describe Puzzle::Problem do
       problem.print_board.should == " 3  1 \n 2  0 \n"
     end
   end
+
+  describe '#manhattan_distance' do
+    context 'when it only needs to go down a square' do
+      subject { described_class.new(:board => [[1, 0], [2, 3]]) }
+      its(:manhattan_distance) { should == 1 }
+    end
+
+    context 'when it needs to go down and over a square' do
+      subject { described_class.new(:board => [[0, 1], [2, 3]]) }
+      its(:manhattan_distance) { should == 2 }
+    end
+  end
+
+  describe '#count_inversions' do
+    context 'when there is one mixed up tile' do
+      subject { described_class.new(:board => [[1, 3], [2, 0]]) }
+      its(:count_inversions) { should == 1}
+    end
+
+    context 'when it is in the goal state' do
+      subject { described_class.new(:board => goal) }
+      its(:count_inversions) { should == 0 }
+    end
+  end
+
+  describe '#solvable?' do
+    context 'when given a solvable puzzle' do
+      subject { described_class.new(:board => [[3, 1], [2, 0]]) }
+      its(:solvable?) { should be_true }
+    end
+
+    context 'when given an unsolvable puzzle' do
+      subject { described_class.new(:board => [[3, 2], [1, 0]]) }
+      its(:solvable?) { should be_false }
+    end
+
+    context 'when given the 15-14 puzzle' do
+      subject do
+        described_class.new(:board => [
+                              [1, 2, 3, 4],
+                              [5, 6, 7, 8],
+                              [9, 10, 11, 12],
+                              [13, 15, 14, 0]
+                            ])
+      end
+      its(:solvable?) { should be_false }
+    end
+  end
 end
