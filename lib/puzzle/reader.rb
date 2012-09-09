@@ -1,11 +1,11 @@
 # Reads and parses a puzzle file.
 #
 class Puzzle::Reader
-  attr_reader :tiles
+  attr_reader :board
 
   # handle -- IO object (we don't mandate a file handle so testing is easier)
   def initialize(handle)
-    @algo_code, @heuristic_code, @verbosity_code, @tiles = parse(handle)
+    @algo_code, @heuristic_code, @verbosity_code, @board = parse(handle)
   end
 
   def algorithm
@@ -34,7 +34,7 @@ class Puzzle::Reader
 
   def parse(handle)
     algo, heuristic, verbosity = 0
-    tiles = []
+    board = []
     i = 0
 
     handle.each_line do |line|
@@ -47,12 +47,12 @@ class Puzzle::Reader
       elsif i == 2
         verbosity = Integer(line)
       else
-        tiles << line.split(/\s/).map { |x| Integer(x) }
+        board << line.split(/\s/).map { |x| Integer(x) }
       end
 
       i += 1
     end
 
-    [algo, heuristic, verbosity, tiles]
+    [algo, heuristic, verbosity, board]
   end
 end

@@ -4,10 +4,10 @@ load_class :reader
 
 describe Puzzle::Reader do
   context '#initialize' do
-    let(:board) { StringIO.new "5\n1\n1\n7 3 8\n0 2 4\n6 5 1" }
+    let(:file) { StringIO.new "5\n1\n1\n7 3 8\n0 2 4\n6 5 1" }
 
     subject(:reader) do
-      described_class.new(board)
+      described_class.new(file)
     end
 
     it 'sets the correct algorithm' do
@@ -22,9 +22,9 @@ describe Puzzle::Reader do
       reader.verbosity.should == :steps_moves
     end
 
-    it 'sets the correct tiles' do
+    it 'sets the correct board' do
       exp = [ [7, 3, 8], [0, 2, 4], [6, 5, 1] ]
-      reader.tiles.should == exp
+      reader.board.should == exp
     end
 
   end
