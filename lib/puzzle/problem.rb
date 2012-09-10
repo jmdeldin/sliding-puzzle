@@ -118,7 +118,8 @@ class Puzzle::Problem
   def initialize_copy(source)
     super(source)
     @blank_position = source.blank_position.dup
-    @board = source.board.dup
+    @board = []
+    source.board.each { |x| @board << x.dup }
   end
 
   private
