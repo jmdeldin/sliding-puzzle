@@ -1,0 +1,25 @@
+#+TITLE:       8-puzzle solver
+#+DESCRIPTION:
+#+STARTUP:     align hidestars indent lognotedone
+
+Work-in-progress.
+
+* Tasks
+- [ ] BFS
+- [ ] DFS
+- [ ] UCS
+- [ ] Greedy
+- [ ] A*
+- [ ] Test in Ruby 1.8
+- [ ] CLI
+
+* Unit Tests
+The unit tests are written in RSpec:
+
+#+begin_src sh
+gem install bundler # install bundler
+bundle install --binstubs .bin # download RSpec
+.bin/rspec spec # run specs
+#+end_src
+
+You can also run =.bin/guard= for continuous testing.
