@@ -168,8 +168,6 @@ describe Puzzle::Problem do
     before(:each) { prob2.move(:up) }
 
     it 'clones the blank position, so the original is not mutated' do
-      puts prob1.print_board
-      puts prob2.print_board
       prob1.blank_position.should == [0,1]
       prob2.blank_position.should == [0,0]
     end
