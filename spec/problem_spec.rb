@@ -142,26 +142,41 @@ describe Puzzle::Problem do
   end
 
   describe '#solvable?' do
-    context 'when given a solvable puzzle' do
-      subject { described_class.new(:board => [[3, 1], [2, 0]]) }
-      its(:solvable?) { should be_true }
-    end
+    it 'returns true for solvable puzzles'
+    it 'returns true for unsolvable puzzles'
+  end
 
-    context 'when given an unsolvable puzzle' do
-      subject { described_class.new(:board => [[3, 2], [1, 0]]) }
-      its(:solvable?) { should be_false }
-    end
+  describe '#hash' do
+    context 'when given two problems with identical boards' do
+      let(:prob1) { described_class.new(:board => [[1,2],[0,3]]) }
+      let(:prob2) { described_class.new(:board => [[1,2],[0,3]]) }
+      specify { prob1.hash == prob2.hash }
 
-    context 'when given the 15-14 puzzle' do
-      subject do
-        described_class.new(:board => [
-                              [1, 2, 3, 4],
-                              [5, 6, 7, 8],
-                              [9, 10, 11, 12],
-                              [13, 15, 14, 0]
-                            ])
+      it 'identifies the same key' do
+        h = Hash.new
+        h[prob1] = true
+        h.key?(prob2).should be_true
       end
-      its(:solvable?) { should be_false }
+    end
+  end
+
+  describe '#clone' do
+    let(:board) { [[1,2],[0,3]] }
+    let(:prob1) { described_class.new(:board => board) }
+    let(:prob2) { prob1.clone }
+
+    before(:each) { prob2.move(:up) }
+
+    it 'clones the blank position, so the original is not mutated' do
+      puts prob1.print_board
+      puts prob2.print_board
+      prob1.blank_position.should == [0,1]
+      prob2.blank_position.should == [0,0]
+    end
+
+    it 'clones the board' do
+      prob1.board.should == board
+      prob2.board.should == [[0,2],[1,3]]
     end
   end
 end

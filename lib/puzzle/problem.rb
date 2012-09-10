@@ -1,5 +1,6 @@
+# Represents an AI problem to be solved.
 class Puzzle::Problem
-  attr_reader :m, :n, :board, :path_cost
+  attr_reader :m, :n, :board, :path_cost, :blank_position
 
   def initialize(opts={})
     @board = opts.fetch(:board)
@@ -101,6 +102,23 @@ class Puzzle::Problem
     end
 
     invs
+  end
+
+  def eql?(other)
+    @board == other.board
+  end
+
+  # alias_method :==, :eql?
+  def hash
+    @board.hash
+  end
+
+  # For #clone to work as expected, we need to clone the instance variables we
+  # care about (board and blank position).
+  def initialize_copy(source)
+    super(source)
+    @blank_position = source.blank_position.dup
+    @board = source.board.dup
   end
 
   private
