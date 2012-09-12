@@ -1,6 +1,3 @@
-require_relative 'solver'
-require 'algorithms'
-
 class Puzzle::PrioritySolver < Puzzle::Solver
   def initialize(problem, priority_func)
     @counts = 0

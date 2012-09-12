@@ -1,8 +1,3 @@
-require_relative '../puzzle'
-require_relative 'node'
-require 'algorithms'
-require 'set'
-
 class Puzzle::Solver
   attr_reader :counts, :solution
 
@@ -60,7 +55,7 @@ class Puzzle::Solver
   end
 
   def moves
-    @nodes.reject { |n| n.move.nil? }.map { |n| n.move.upcase[0] }.join(" => ")
+    @nodes.reject { |n| n.move.nil? }.map { |n| n.move.to_s.upcase[0] }.join(" => ")
   end
 
   def steps

@@ -1,11 +1,7 @@
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
-unless Kernel.respond_to?(:require_relative)
-  module Kernel
-    def require_relative(path)
-      require File.join(File.dirname(caller[0]), path.to_str)
-    end
-  end
-end
+
+require 'algorithms'
+require 'set'
 
 module Puzzle
   [:Reader, :Node, :Solver, :Problem].each do |m|

@@ -1,5 +1,3 @@
-require_relative 'priority_solver'
-
 class Puzzle::GreedySolver < Puzzle::PrioritySolver
   def initialize(problem)
     priority = lambda { |graph| graph.problem.manhattan_distance }
