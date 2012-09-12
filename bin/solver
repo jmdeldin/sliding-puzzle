@@ -1,0 +1,21 @@
+#! /usr/bin/env ruby
+
+require_relative '../lib/puzzle'
+require_relative '../lib/puzzle/problem'
+require_relative '../lib/puzzle/reader'
+require_relative '../lib/puzzle/bfs_solver'
+require_relative '../lib/puzzle/dfs_solver'
+
+usage = <<EOF
+Usage: #{File.basename(__FILE__)} INPUT-FILE
+EOF
+
+abort usage unless ARGV.first
+
+reader = Puzzle::Reader.new(File.open(ARGV.first))
+
+klass = reader.algorithm.to_s.capitalize + 'Solver'
+solver = Puzzle::const_get(klass).new(Puzzle::Problem.new(:board => reader.board))
+
+
+solver.send(reader.verbosity)

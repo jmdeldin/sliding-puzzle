@@ -1,16 +1,14 @@
 require_relative 'solver'
-require 'thread' # for Queue
 
-# Breadth-first search solution
-class Puzzle::BfsSolver < Puzzle::Solver
+class Puzzle::DfsSolver < Puzzle::Solver
   def run(problem)
     g = Puzzle::Node.new(problem)
-    frontier = Queue.new
-    frontier.enq g
+    frontier = []
+    frontier.unshift g
     marked = {g.board => true}
 
     until frontier.empty?
-      ng = frontier.deq
+      ng = frontier.pop
 
       return @solution = ng if ng.problem.solved?
       @counts += 1
@@ -25,25 +23,9 @@ class Puzzle::BfsSolver < Puzzle::Solver
 
         if !marked[new_graph.board]
           marked[new_graph.board] = true
-          frontier.enq new_graph
+          frontier.unshift new_graph
         end
       end
     end
   end
-end
-
-if $0 == __FILE__
-  require_relative 'problem'
-  board =[
-    [7, 3, 8],
-    [0, 2, 4],
-    [6, 5, 1]
-  ]
-  board2 = [[1, 2], [0, 3]]
-  prob = Puzzle::Problem.new(:board => board2)
-  bfs = Puzzle::BfsSolver.new(prob)
-
-  puts bfs.num_steps
-  puts bfs.moves
-  puts bfs.boards
 end

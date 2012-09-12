@@ -6,6 +6,7 @@ class Puzzle::Reader
   # handle -- IO object (we don't mandate a file handle so testing is easier)
   def initialize(handle)
     @algo_code, @heuristic_code, @verbosity_code, @board = parse(handle)
+    handle.close
   end
 
   def algorithm
