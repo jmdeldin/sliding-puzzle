@@ -79,6 +79,7 @@ class Puzzle::Problem
 
     (xg - xb).abs + (yg - yb).abs
   end
+  alias_method :h2, :manhattan_distance
 
   # This is essentially bubble-sort.
   def count_inversions
@@ -105,6 +106,7 @@ class Puzzle::Problem
 
     invs
   end
+  alias_method :h1, :count_inversions
 
   def eql?(other)
     @board == other.board
