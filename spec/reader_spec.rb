@@ -34,7 +34,7 @@ describe Puzzle::Reader do
       1 => :dfs,
       2 => :bfs,
       3 => :ucs,
-      4 => :gbfs,
+      4 => :greedy,
       5 => :astar,
     }.each do |code, algo|
       context "given a code of #{code}" do

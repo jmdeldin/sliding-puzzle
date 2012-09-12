@@ -14,7 +14,7 @@ class Puzzle::Reader
       1 => :dfs,
       2 => :bfs,
       3 => :ucs,
-      4 => :gbfs,
+      4 => :greedy,
       5 => :astar,
     }[@algo_code]
   end
