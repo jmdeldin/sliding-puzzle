@@ -1,6 +1,6 @@
 # Represents an AI problem to be solved.
 class Puzzle::Problem
-  attr_reader :m, :n, :board, :path_cost, :blank_position
+  attr_reader :m, :n, :board, :path_cost, :blank_position, :moves
 
   def initialize(opts={})
     @board = opts.fetch(:board)
@@ -9,6 +9,7 @@ class Puzzle::Problem
     @cols = @n = @board.first.size
     @blank_position = find_blank_position
     @path_cost = 0
+    @moves = []
   end
 
   # Automatically determines the goal state given the dimensions of a board.
@@ -51,6 +52,7 @@ class Puzzle::Problem
 
     send(direction)
     @path_cost += 1
+    @moves << direction.to_s.upcase[0]
   end
 
   def print_board

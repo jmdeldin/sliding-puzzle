@@ -100,13 +100,24 @@ describe Puzzle::Problem do
     end
   end
 
-  describe '#path_cost' do
+  describe 'output' do
     subject(:problem) { described_class.new(:board => [[3, 1], [2, 0]]) }
-    it 'is incremented every time a move is made' do
-      problem.move(:up)
-      problem.path_cost.should == 1
-      problem.move(:left)
-      problem.path_cost.should == 2
+
+    describe '#path_cost' do
+      it 'is incremented every time a move is made' do
+        problem.move(:up)
+        problem.path_cost.should == 1
+        problem.move(:left)
+        problem.path_cost.should == 2
+      end
+    end
+
+    describe '#moves' do
+      it 'reports the sequence of moves taken' do
+        problem.move(:up)
+        problem.move(:left)
+        problem.moves.should == ["U", "L"]
+      end
     end
   end
 

@@ -8,17 +8,22 @@ describe Puzzle::BfsSolver do
 
   context 'when given a solved puzzle' do
     let(:board) { [[1, 2], [3, 0]] }
-    its(:steps) { should == 0 }
-    its(:moves) { should be_empty }
+    specify { solver.num_steps.should == 0}
+    specify { solver.moves.should be_empty }
+    specify { solver.boards.should == problem.print_board }
   end
 
   context 'when given a puzzle with only one move to make' do
     # 1 2
     # 0 3 (shift 0 right)
     let(:board) { [[1, 2], [0, 3]] }
+
     it 'returns a path cost of 1' do
-      winner = solver.solve
-      winner.path_cost.should == 1
+      solver.num_steps.should == 1
+    end
+
+    it 'returns a sequence of moves' do
+      solver.moves.should == "R"
     end
   end
 
@@ -27,8 +32,7 @@ describe Puzzle::BfsSolver do
     # 2 0
     let(:board) { [[3, 1], [2, 0]] }
     it 'returns a path cost of 4' do
-      winner = solver.solve
-      winner.path_cost.should == 4
+      solver.num_steps.should == 4
     end
   end
 end
