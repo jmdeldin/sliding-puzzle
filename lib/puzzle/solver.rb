@@ -2,7 +2,8 @@ require_relative '../puzzle'
 require_relative 'node'
 
 class Puzzle::Solver
-  attr_reader :counts
+  attr_reader :counts, :solution
+
   def initialize(problem)
     @counts = 0
     @solution = nil

@@ -1,16 +1,18 @@
 require_relative 'solver'
-require 'thread' # for Queue
+require 'algorithms'
 
-# Breadth-first search solution
-class Puzzle::BfsSolver < Puzzle::Solver
+class Puzzle::UcsSolver < Puzzle::Solver
   def run(problem)
     g = Puzzle::Node.new(problem)
-    frontier = Queue.new
-    frontier.enq g
+    frontier = Containers::PriorityQueue.new do |x, y|
+      (y <=> x) == 1 # prefer smaller elts
+    end
+
+    frontier.push(g, g.cost)
     marked = {g.board => true}
 
     until frontier.empty?
-      ng = frontier.deq
+      ng = frontier.pop
 
       return @solution = ng if ng.problem.solved?
       @counts += 1
@@ -25,7 +27,7 @@ class Puzzle::BfsSolver < Puzzle::Solver
 
         if !marked[new_graph.board]
           marked[new_graph.board] = true
-          frontier.enq new_graph
+          frontier.push(new_graph, new_graph.cost)
         end
       end
     end
