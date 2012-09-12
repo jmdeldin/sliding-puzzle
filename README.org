@@ -1,25 +1,45 @@
-#+TITLE:       8-puzzle solver
-#+DESCRIPTION:
+#+TITLE:       Sliding Puzzle Solver
 #+STARTUP:     align hidestars indent lognotedone
 
-Work-in-progress.
+* Requirements
+- UNIX-like system running Ruby 1.8.7 or better (1.9.3 preferred)
+  This has only been tested on OS X 10.8.1.
+- The =algorithms= package. This can be installed like so from the project root:
 
-* Tasks
-- [ ] BFS
-- [ ] DFS
-- [ ] UCS
-- [ ] Greedy
-- [ ] A*
-- [ ] Test in Ruby 1.8
-- [ ] CLI
+  #+begin_src sh
+    gem install bundler # you may need to prefix this with "sudo"
 
-* Unit Tests
-The unit tests are written in RSpec:
+    bundle install --binstubs .bin
+  #+end_src
+
+* Usage
+From the project root, run
 
 #+begin_src sh
-gem install bundler # install bundler
-bundle install --binstubs .bin # download RSpec
+bundle exec bin/solver INPUT-FILE
+#+end_src
+
+The =data= directory has plenty of examples.
+
+* Performance on an 8-puzzle
+| Algorithm     |  Steps | Approx. Nodes Expanded | Wall Time (s) |
+|---------------+--------+------------------------+---------------|
+| Breadth-First |     23 | 123,000                |          9.24 |
+| Depth-First   | 26,535 | 27,000                 |          2.10 |
+| Uniform-Cost  |   1347 | 66,000                 |         13.52 |
+| Greedy        |    211 | 145,000                |        314.33 |
+| A* h1         |     91 | < 1000                 |          0.25 |
+| A* h2         |   1347 | 66,000                 |         11.36 |
+
+* Unit Tests
+From the project root, you can run the unit tests as follows (requires Ruby 1.9):
+
+#+begin_src sh
 .bin/rspec spec # run specs
 #+end_src
 
 You can also run =.bin/guard= for continuous testing.
+
+* TODO Bugs
+- DFS is a little extreme
+- Need to investigate h2
