@@ -55,7 +55,7 @@ class Puzzle::Solver
   end
 
   def moves
-    @nodes.reject { |n| n.move.nil? }.map { |n| n.move.to_s.upcase[0] }.join(" => ")
+    @nodes.reject { |n| n.move.nil? }.map { |n| n.move.to_s.upcase.chars.first }.join(" => ")
   end
 
   def steps
