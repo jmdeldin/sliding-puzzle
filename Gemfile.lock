@@ -24,6 +24,7 @@ GEM
     rb-fsevent (0.9.1)
     rb-inotify (0.8.8)
       ffi (>= 0.5.0)
+    require_relative (1.0.3)
     rspec (2.11.0)
       rspec-core (~> 2.11.0)
       rspec-expectations (~> 2.11.0)
@@ -42,4 +43,5 @@ DEPENDENCIES
   algorithms
   guard-rspec
   pry
+  require_relative
   rspec
