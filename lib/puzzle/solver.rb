@@ -1,6 +1,7 @@
 require_relative '../puzzle'
 require_relative 'node'
 require 'algorithms'
+require 'set'
 
 class Puzzle::Solver
   attr_reader :counts, :solution
@@ -17,7 +18,8 @@ class Puzzle::Solver
   def run
     g = Puzzle::Node.new(@problem)
     @frontier.push g
-    marked = {g.board => true}
+    marked = Set.new
+    marked.add g.board
 
     until @frontier.empty?
       ng = @frontier.pop
@@ -33,8 +35,8 @@ class Puzzle::Solver
         new_graph = Puzzle::Node.new(new_problem, ng)
         new_graph.move = action
 
-        if !marked[new_graph.board]
-          marked[new_graph.board] = true
+        unless marked.include? new_graph.board
+          marked.add new_graph.board
           @frontier.push new_graph
         end
       end

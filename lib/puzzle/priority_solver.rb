@@ -17,7 +17,8 @@ class Puzzle::PrioritySolver < Puzzle::Solver
     end
 
     frontier.push(g, @priority_func.call(g))
-    marked = {g.board => true}
+    marked = Set.new
+    marked.add g.board
 
     until frontier.empty?
       ng = frontier.pop
@@ -33,8 +34,8 @@ class Puzzle::PrioritySolver < Puzzle::Solver
         new_graph = Puzzle::Node.new(new_problem, ng)
         new_graph.move = action
 
-        if !marked[new_graph.board]
-          marked[new_graph.board] = true
+        unless marked.include? new_graph.board
+          marked.add new_graph.board
           frontier.push(new_graph, @priority_func.call(new_graph))
         end
       end
