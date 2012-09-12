@@ -1,13 +1,7 @@
 #! /usr/bin/env ruby
+$LOAD_PATH << File.expand_path(File.join(File.dirname(__FILE__), "../"))
 
-require_relative '../lib/puzzle'
-require_relative '../lib/puzzle/problem'
-require_relative '../lib/puzzle/reader'
-require_relative '../lib/puzzle/bfs_solver'
-require_relative '../lib/puzzle/dfs_solver'
-require_relative '../lib/puzzle/ucs_solver'
-require_relative '../lib/puzzle/greedy_solver'
-require_relative '../lib/puzzle/astar_solver'
+require 'lib/puzzle'
 
 usage = <<EOF
 Usage: #{File.basename(__FILE__)} INPUT-FILE
@@ -19,10 +13,13 @@ reader = Puzzle::Reader.new(File.open(ARGV.first))
 
 klass = reader.algorithm.to_s.capitalize + 'Solver'
 
-if klass == "AstarSolver"
-  solver = Puzzle::AstarSolver.new(Puzzle::Problem.new(:board => reader.board), reader.heuristic)
-else
-  solver = Puzzle::const_get(klass).new(Puzzle::Problem.new(:board => reader.board))
-end
+solver = if klass == "AstarSolver" then
+           Puzzle::AstarSolver.new(
+                               Puzzle::Problem.new(:board => reader.board),
+                               reader.heuristic)
+         else
+           Puzzle::const_get(klass).new(
+                                    Puzzle::Problem.new(:board => reader.board))
+         end
 
 solver.send(reader.verbosity)
